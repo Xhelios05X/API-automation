@@ -11,12 +11,13 @@ def Last5DaysCurrentExangeRate(CurrencyName):
     lastDays = 5
     url = f"http://api.nbp.pl/api/exchangerates/rates/A/{CurrencyName}/last/{lastDays}/"
     fiveDaysCurrency = json.loads(requests.get(url).text)["rates"]
-    
+    print(fiveDaysCurrency)
+    """
     currencyRates = []
     for iterator in fiveDaysCurrency:
         currencyRates.append(iterator["mid"])
     return currencyRates
-
+    """
     
 
 

@@ -28,6 +28,7 @@ def Last5DaysCurrentExangeRate(CurrencyName:str):
         currencyRates.append(iterator["mid"])
         dates.append(iterator["effectiveDate"])
     TablePrint("Dates", "CurrencyRates", dates, currencyRates)
+    
 
 if __name__ == "__main__":
     # todo: pobieranie nazwy waluty ze standardowego wejscia

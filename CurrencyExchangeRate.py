@@ -13,9 +13,22 @@ def TablePrint(headlineOne:str, headlineTwo:str, columnOne:list, columnTwo:list)
     print(headlineOne+"\t"+"\t"+headlineTwo)
     for iterator in range(len(columnOne)):
         print(str(columnOne[iterator])+"\t"+str(columnTwo[iterator]))
+    print("")
 
 def CurrentExangeRate(CurrencyName:str):
-    return float((json.loads(requests.get(f"http://api.nbp.pl/api/exchangerates/rates/A/{CurrencyName}/").text))["rates"][0]['mid'])
+    url = f"http://api.nbp.pl/api/exchangerates/rates/A/{CurrencyName}/"
+    return float((json.loads(requests.get(url).text))["rates"][0]['mid'])
+
+def Diffrence(dates:list, currencyRates:list):
+    datesDiffrences = []
+    ratesDiffrence = []
+    iterator = 1
+
+    for iterator in range(len(currencyRates)):
+        datesDiffrences.append("from "+dates[iterator-1]+" to "+dates[iterator])
+        ratesDiffrence.append(currencyRates[iterator-1]-currencyRates[iterator])
+    
+    TablePrint("days", "rate change", datesDiffrences, ratesDiffrence)
 
 def Last5DaysCurrentExangeRate(CurrencyName:str):
     lastDays = 5
@@ -27,7 +40,9 @@ def Last5DaysCurrentExangeRate(CurrencyName:str):
     for iterator in fiveDaysCurrency:
         currencyRates.append(iterator["mid"])
         dates.append(iterator["effectiveDate"])
+    
     TablePrint("Dates", "CurrencyRates", dates, currencyRates)
+    Diffrence(dates, currencyRates)
     
 
 if __name__ == "__main__":

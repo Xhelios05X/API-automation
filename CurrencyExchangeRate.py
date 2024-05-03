@@ -8,7 +8,7 @@ import json
 def TablePrint(headlineOne:str, headlineTwo:str, columnOne:list, columnTwo:list):
     if len(columnOne) != len(columnTwo):
         # if that statement is true, its a critital error
-        sys.exit -1
+        sys.exit(-1)
     
     iterator = 0
 
@@ -51,10 +51,13 @@ def Last5DaysCurrentExangeRate(CurrencyName:str):
     
 
 if __name__ == "__main__":
-    # todo: pobieranie nazwy waluty ze standardowego wejscia
-    """
-    currencyName = "USD"
-    currentResponse = CurrentExangeRate(currencyName)
-    print(currentResponse)
-    """
-    Last5DaysCurrentExangeRate("USD")
+    if len(sys.argv) == 1:
+        print("you have to type a currency")
+        sys.exit(-1)
+
+    currency = sys.argv[1]
+
+    CurrentExangeRate(currency)
+    Last5DaysCurrentExangeRate(currency)
+    # ToDo
+    # dodanie zakończenia procesu przy błędnych walutach

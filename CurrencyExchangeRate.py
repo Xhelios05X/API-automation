@@ -9,6 +9,8 @@ def TablePrint(headlineOne:str, headlineTwo:str, columnOne:list, columnTwo:list)
     if len(columnOne) != len(columnTwo):
         # if that statement is true, its a critital error
         sys.exit -1
+    
+    iterator = 0
 
     print(headlineOne+"\t"+"\t"+headlineTwo)
     for iterator in range(len(columnOne)):
@@ -22,11 +24,14 @@ def CurrentExangeRate(CurrencyName:str):
 def Diffrence(dates:list, currencyRates:list):
     datesDiffrences = []
     ratesDiffrence = []
-    iterator = 1
 
-    for iterator in range(len(currencyRates)):
+    iterator = 1
+    currencyLen = len(currencyRates)
+
+    while iterator < currencyLen:
         datesDiffrences.append("from "+dates[iterator-1]+" to "+dates[iterator])
         ratesDiffrence.append(currencyRates[iterator-1]-currencyRates[iterator])
+        iterator += 1
     
     TablePrint("days", "rate change", datesDiffrences, ratesDiffrence)
 

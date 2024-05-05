@@ -19,7 +19,13 @@ def TablePrint(headlineOne:str, headlineTwo:str, columnOne:list, columnTwo:list)
 
 def CurrentExangeRate(CurrencyName:str):
     url = f"http://api.nbp.pl/api/exchangerates/rates/A/{CurrencyName}/"
-    return float((json.loads(requests.get(url).text))["rates"][0]['mid'])
+    try:
+        # it's standard return of this function, if everything gone well
+        return float((json.loads(requests.get(url).text))["rates"][0]['mid'])
+    except:
+        # if API return an error, that excpet will return and exit from program
+        print(f"currency {CurrencyName} don't exist")
+        sys.exit(-1)
 
 def Diffrence(dates:list, currencyRates:list):
     datesDiffrences = []
@@ -37,17 +43,22 @@ def Diffrence(dates:list, currencyRates:list):
 
 def Last5DaysCurrentExangeRate(CurrencyName:str):
     lastDays = 5
-    url = f"http://api.nbp.pl/api/exchangerates/rates/A/{CurrencyName}/last/{lastDays}/"
-    fiveDaysCurrency = json.loads(requests.get(url).text)["rates"]
+    try:
+        # it's standard algorithm of funcion, if everithing gone well
+        url = f"http://api.nbp.pl/api/exchangerates/rates/A/{CurrencyName}/last/{lastDays}/"
+        fiveDaysCurrency = json.loads(requests.get(url).text)["rates"]
     
-    dates = []
-    currencyRates = []
-    for iterator in fiveDaysCurrency:
-        currencyRates.append(iterator["mid"])
-        dates.append(iterator["effectiveDate"])
+        dates = []
+        currencyRates = []
+        for iterator in fiveDaysCurrency:
+            currencyRates.append(iterator["mid"])
+            dates.append(iterator["effectiveDate"])
     
-    TablePrint("Dates", "CurrencyRates", dates, currencyRates)
-    Diffrence(dates, currencyRates)
+        TablePrint("Dates", "CurrencyRates", dates, currencyRates)
+        Diffrence(dates, currencyRates)
+    except:
+        print(f"currency {CurrencyName} don't exist")
+        sys.exit(-1)
     
 
 if __name__ == "__main__":
@@ -59,5 +70,3 @@ if __name__ == "__main__":
 
     CurrentExangeRate(currency)
     Last5DaysCurrentExangeRate(currency)
-    # ToDo
-    # dodanie zakończenia procesu przy błędnych walutach

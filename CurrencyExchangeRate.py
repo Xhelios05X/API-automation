@@ -3,6 +3,17 @@
 import requests
 import sys
 import json
+import argparse
+
+# this funcion call a help of that script
+def Help():
+    parser = argparse.ArgumentParser(
+        prog = 'CurrencyExxhangeRate.py',
+        description = '''Script process a NBP's API response \n
+        and return a currency exange rate''',
+    )
+    parser.add_argument('currencyName')
+    args=parser.parse_args()
 
 # assumption: length of columnOne and columnTwo is equal
 def TablePrint(headlineOne:str, headlineTwo:str, columnOne:list, columnTwo:list):
@@ -44,7 +55,7 @@ def Diffrence(dates:list, currencyRates:list):
 def Last5DaysCurrentExangeRate(CurrencyName:str):
     lastDays = 5
     try:
-        # it's standard algorithm of funcion, if everithing gone well
+        # it's standard algorithm of funcion, if everything gone well
         url = f"http://api.nbp.pl/api/exchangerates/rates/A/{CurrencyName}/last/{lastDays}/"
         fiveDaysCurrency = json.loads(requests.get(url).text)["rates"]
     
@@ -62,9 +73,13 @@ def Last5DaysCurrentExangeRate(CurrencyName:str):
     
 
 if __name__ == "__main__":
+    Help()
+
+    """
     if len(sys.argv) == 1:
         print("you have to type a currency")
         sys.exit(-1)
+    """
 
     currency = sys.argv[1]
 

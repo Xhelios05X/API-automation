@@ -50,7 +50,6 @@ def Diffrence(dates:list, currencyRates:list):
     datesDiffrences = []
     ratesDiffrence = []
 
-    # iterator = 1
     currencyLen = len(currencyRates)
 
     for iterator in range(1, len(currencyRates)):

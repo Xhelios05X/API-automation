@@ -12,10 +12,12 @@ def Help():
         description = '''Script process a NBP's API response \n
         and return a currency exange rate''',
     )
+
     parser.add_argument('currencyName')
     args=parser.parse_args()
 
 # assumption: length of columnOne and columnTwo is equal
+# function is printing a table with headlines and data
 def TablePrint(headlineOne:str, headlineTwo:str, columnOne:list, columnTwo:list):
     if len(columnOne) != len(columnTwo):
         # if that statement is true, its a critital error
@@ -26,18 +28,24 @@ def TablePrint(headlineOne:str, headlineTwo:str, columnOne:list, columnTwo:list)
     print(headlineOne+"\t"+"\t"+headlineTwo)
     for iterator in range(len(columnOne)):
         print(str(columnOne[iterator])+"\t"+str(columnTwo[iterator]))
+
     print("")
 
+# funcion send call to API about currnet currency exange rate 
 def CurrentExangeRate(CurrencyName:str):
     url = f"http://api.nbp.pl/api/exchangerates/rates/A/{CurrencyName}/"
+
     try:
         # it's standard return of this function, if everything gone well
-        return float((json.loads(requests.get(url).text))["rates"][0]['mid'])
+        currentExangeRate = float((json.loads(requests.get(url).text))["rates"][0]['mid'])
+        print(f"Current {CurrencyName} exange rate {currentExangeRate}", end = "\n")
+
     except:
         # if API return an error, that excpet will return and exit from program
         print(f"currency {CurrencyName} don't exist")
         sys.exit(-1)
 
+# funcion counts currency price changes
 def Diffrence(dates:list, currencyRates:list):
     datesDiffrences = []
     ratesDiffrence = []
@@ -47,9 +55,11 @@ def Diffrence(dates:list, currencyRates:list):
 
     while iterator < currencyLen:
         datesDiffrences.append("from "+dates[iterator-1]+" to "+dates[iterator])
-        ratesDiffrence.append(currencyRates[iterator-1]-currencyRates[iterator])
+        ratesDiffrence.append((currencyRates[iterator]-currencyRates[iterator-1]))
+
         iterator += 1
     
+    # all data is transferred to TablePrint function, to be displayed as a table
     TablePrint("days", "rate change", datesDiffrences, ratesDiffrence)
 
 def Last5DaysCurrentExangeRate(CurrencyName:str):
@@ -67,11 +77,13 @@ def Last5DaysCurrentExangeRate(CurrencyName:str):
     
         TablePrint("Dates", "CurrencyRates", dates, currencyRates)
         Diffrence(dates, currencyRates)
+
     except:
         print(f"currency {CurrencyName} don't exist")
         sys.exit(-1)
     
 
+# it's standard main function of script
 if __name__ == "__main__":
     Help()
 

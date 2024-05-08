@@ -50,10 +50,10 @@ def Diffrence(dates:list, currencyRates:list):
     datesDiffrences = []
     ratesDiffrence = []
 
-    iterator = 1
+    # iterator = 1
     currencyLen = len(currencyRates)
 
-    while iterator < currencyLen:
+    for iterator in range(1, len(currencyRates)):
         datesDiffrences.append("from "+dates[iterator-1]+" to "+dates[iterator])
         ratesDiffrence.append((currencyRates[iterator]-currencyRates[iterator-1]))
 
@@ -86,12 +86,6 @@ def Last5DaysCurrentExangeRate(CurrencyName:str):
 # it's standard main function of script
 if __name__ == "__main__":
     Help()
-
-    """
-    if len(sys.argv) == 1:
-        print("you have to type a currency")
-        sys.exit(-1)
-    """
 
     currency = sys.argv[1]
 

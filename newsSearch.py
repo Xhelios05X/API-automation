@@ -46,6 +46,7 @@ def APIresponseInterpreter(APIkey:str, keyword:str):
         # if something goes wrong, program exits with error code -1
         sys.exit(-1)
 
+# main function
 # sys.argv[1] - API key
 # sys.argv[2] - keyword of news
 if __name__ == "__main__":

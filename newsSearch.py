@@ -8,12 +8,12 @@ import argparse
 # funcion call help of that script in cmd
 def Help():
     parser = argparse.ArgumentParser(
-        prog = 'newsSearch.py',
-        description = '''Script process a news API api response and return lists of articles about typed keyword''',
+        prog = "newsSearch.py",
+        description = "Script process a news API api response and return lists of articles about typed keyword",
     )
 
-    parser.add_argument('APIkey')
-    parser.add_argument('keyword')
+    parser.add_argument("APIkey")
+    parser.add_argument("keyword")
     args=parser.parse_args()
 
 
@@ -41,7 +41,9 @@ def APIresponseInterpreter(APIkey:str, keyword:str):
 
         # loop lists an articles
         for iterator in range(len(APIresponse["articles"])):
-            print("author: "+str(APIresponse["articles"][iterator]["author"])+"\ntitle: "+APIresponse["articles"][iterator]["title"]+"\nurl: "+APIresponse["articles"][iterator]["url"]+"\n")
+            print("author: "+str(APIresponse["articles"][iterator]["author"])+
+                  "\ntitle: "+APIresponse["articles"][iterator]["title"]+
+                  "\nurl: "+APIresponse["articles"][iterator]["url"]+"\n")
     except:
         # if something goes wrong, program exits with error code -1
         sys.exit(-1)
